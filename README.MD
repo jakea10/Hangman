@@ -12,7 +12,7 @@ Welcome to the classic word-guessing game, Hangman! Test your vocabulary and sav
 ## Gameplay
 1. Choose your word pool and maximum word length. The game will prompt you with options.
 2. Start guessing letters! You'll have 6 incorrect guesses before the hangman is complete.
-3. eveal the word letter by letter with correct guesses.
+3. Reveal the word letter by letter with correct guesses.
 4. Win by guessing the entire word before the hangman is finished!
 5. Play again or exit the game after each round.
 
@@ -24,7 +24,7 @@ Welcome to the classic word-guessing game, Hangman! Test your vocabulary and sav
 
 ## Additional Notes
 * The game only accepts single-letter guesses.
-* Guesses must be lowercase letters.
+* Currently available word pools include animals and vocab words.
 * The game will keep track of already guessed letters.
 
 ## Have fun and try not to hang the man!

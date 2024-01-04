@@ -52,7 +52,7 @@ def get_settings() -> tuple[str, int]:
 
     print("Word pool options:")
     for key, value in word_options.items():
-        print(f"\tOption {key} - {value}")
+        print(f"- Option {key}: {value}")
     print()
 
     # Collect and validate user's choice
@@ -70,7 +70,8 @@ def get_settings() -> tuple[str, int]:
     length_options = {1: 5, 2: 10, 3: 20}
     print("\nMax word length options:")
     for key, value in length_options.items():
-        print(f"\tOption {key} - {value} letters")
+        print(f"- Option {key}: {value} letters")
+    print()
 
     # Collect and validate user's choice
     while True:
@@ -200,6 +201,7 @@ while True:
     # Play again?
     if game_done:
         if play_again():
+            print()
             incorrect_letters = ""
             correct_letters   = ""
             game_done = False
