@@ -4,10 +4,10 @@ Welcome to the classic word-guessing game, Hangman! Test your vocabulary and sav
 
 ## Getting Started
 1. Make sure you have Python 3 installed on your system.
-2. Download the hangman.py file.
-3. Place the animals.txt and vocab_words.txt files in the same directory as hangman.py. These files contain the word lists for the game.
+2. Download the `hangman.py` file.
+3. Place the `animals.txt` and `vocab_words.txt` files in the same directory as `hangman.py`. These files contain the word lists for the game.
 4. Open a terminal or command prompt in the directory where you saved the files.
-5. Run the game by typing python hangman.py and pressing Enter.
+5. Run the game by typing `python hangman.py` and pressing Enter.
 
 ## Gameplay
 1. Choose your word pool and maximum word length. The game will prompt you with options.
