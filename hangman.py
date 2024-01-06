@@ -43,9 +43,9 @@ HANGMAN_ART = ['''
 # words = ["annoy", "attention", "calm", "comfortable", "consequences",
 #         "curious", "curve", "decide", "directions", "disappointed"]
 
-def get_settings() -> tuple[str, int]:
+def get_settings() -> tuple[str, int, int]:
     """
-    Get user choice of desired word pool and max word length
+    Get user choice of desired word pool and word length range
     """
     # word_options values used verbatim to open the word file
     word_options = {1: 'animals', 2: 'vocab_words'}
@@ -66,11 +66,15 @@ def get_settings() -> tuple[str, int]:
         except ValueError:
             print("Please enter a valid option.")
 
-    # Display max word length options to user
-    length_options = {1: 5, 2: 10, 3: 20}
+    # Display word length options to user
+    length_options = {
+        1: {'min': 1, 'max': 5},
+        2: {'min': 6, 'max': 10},
+        3: {'min': 11, 'max': 20}
+    }
     print("\nMax word length options:")
-    for key, value in length_options.items():
-        print(f"- Option {key}: {value} letters")
+    for num, lengths in length_options.items():
+        print(f"- Option {num}: {lengths.get('min')}-{lengths.get('max')} letters")
     print()
 
     # Collect and validate user's choice
@@ -78,26 +82,35 @@ def get_settings() -> tuple[str, int]:
         try:
             length_choice = int(input("Please enter the desired option number: "))
             if length_choice in length_options.keys():
-                break
+                word_pool = word_options[word_choice]
+                length_range = length_options.get(length_choice)
+                min_length = length_range.get('min')
+                max_length = length_range.get('max')
+
+                return word_pool, min_length, max_length
             else:
                 raise ValueError
         except ValueError:
             print("Please enter a valid option.")
 
-    return word_options[word_choice], length_options[length_choice]
+    #return word_options[word_choice], length_options[length_choice[0]], length_options[length_choice[1]]
 
 
-def get_random_word(word_option: str, max_length: int) -> str:
+def get_random_word(word_option: str, min_length: int, max_length: int) -> str:
     """
-    Opens file according to the selected word pool and returns
-    a randomly selected word no longer than the selected max length
+    Opens file according to the selected word pool and returns a
+    randomly selected word between min_length and max_length.
     """
     
     filename = word_option + ".txt"
     # file must be in same dir as hangman.py
     with open(filename) as f:
         contents = f.readlines()
-        wordlist = [word.strip().lower() for word in contents if len(word) <= max_length]
+        wordlist = []
+        for word in contents:
+            length = len(word)
+            if length in range(min_length, max_length + 1):
+                wordlist.append(word.strip().lower())
 
     index = random.randint(0, len(wordlist) - 1) # inclusive range
     
@@ -148,6 +161,10 @@ def play_again() -> bool:
 
     return answer.startswith('y')
 
+
+#def reset_game():
+
+
 # ---------------
 # Set up the game
 # ---------------
@@ -157,8 +174,8 @@ print("""===============
 
 incorrect_letters  = ""
 correct_letters = ""
-word_pool, max_length = get_settings()
-secret_word = get_random_word(word_pool, max_length)
+word_pool, min_length, max_length = get_settings()
+secret_word = get_random_word(word_pool, min_length, max_length)
 # # FOR TESTING
 # secret_word = get_random_word(words)
 game_done = False
@@ -196,7 +213,7 @@ while True:
             print(f"- Correct guesses:   {len(correct_letters)}")
             print(f"The secret word was: {secret_word.upper()}")
 
-            game_done = True # Use this line for 'Part 4: Testing your program'
+            game_done = True
 
     # Play again?
     if game_done:
@@ -205,9 +222,8 @@ while True:
             incorrect_letters = ""
             correct_letters   = ""
             game_done = False
-            word_pool, max_length = get_settings()
-            secret_word = get_random_word(word_pool, max_length)
-            # secret_word = get_random_word(words)
+            word_pool, min_length, max_length = get_settings()
+            secret_word = get_random_word(word_pool, min_length, max_length)
         else:
             break
 
